@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity
                             .replace(R.id.sub_content_frame, ProfileFragment.newInstance(),
                                     ProfileFragment.TAG).commit();
                     toolbar.setTitle(R.string.profile);
+                    return true;
 
                 case R.id.navigation_logout:
                     mLogout();

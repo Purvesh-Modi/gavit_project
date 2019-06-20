@@ -177,13 +177,13 @@ public class CfoSignUpActivity extends AppCompatActivity implements View.OnClick
 
         CreateCFOUserRequest request = new CreateCFOUserRequest();
 
-        request.setUserEmail(cfo_email.getText().toString().trim());
-        request.setUserPassword(cfo_cfm_password.getText().toString().trim());
-        request.setUserFname(cfo_fname.getText().toString().trim());
-        request.setUserLname(cfo_lname.getText().toString().trim());
-        request.setQualification(cfo_qualification.getText().toString().trim());
-        request.setYearsOfExperience(cfo_exprience.getText().toString().trim());
-        request.setUserPhone(cfo_phn.getText().toString().trim());
+        request.setCfoEmail(cfo_email.getText().toString().trim());
+        request.setCfoPassword(cfo_cfm_password.getText().toString().trim());
+        request.setCfoFname(cfo_fname.getText().toString().trim());
+        request.setCfoLname(cfo_lname.getText().toString().trim());
+        request.setCfoQualification(cfo_qualification.getText().toString().trim());
+        request.setCfoYears_of_exp(cfo_exprience.getText().toString().trim());
+        request.setCfoPhone(Long.valueOf(cfo_phn.getText().toString().trim()));
 
         try {
             Call<UserDataResponse> requestCreateCall = RetrofitClient.getInstance().getApi().registerCFOUser(request);
