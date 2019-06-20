@@ -11,6 +11,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/bg</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -30,8 +31,8 @@
     <!-- Material design layout !-->
     <style name="coustom_TextInput_Layout_style" parent="Base.Widget.MaterialComponents.TextInputLayout">
         <item name="boxBackgroundMode">outline</item>
-        <item name="boxStrokeColor">@color/white</item>
-        <item name="android:textSize">15sp</item>
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/black</item>
     </style>

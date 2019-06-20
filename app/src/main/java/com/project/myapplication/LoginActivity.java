@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -29,7 +30,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnUserLogin, btnCfoLogin, signup;
-    private EditText username, mPassword;
+    private TextInputEditText username, mPassword;
     private Snackbar       snackbar;
     private View           view;
     private ProgressDialog mProgressDialog;
