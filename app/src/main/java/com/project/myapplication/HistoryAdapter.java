@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.project.myapplication.retrofit.response.UserDataResponse;
+import com.project.myapplication.retrofit.api_models.CFOUserModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyHistoryViewHolder> {
 
-    private List<UserDataResponse> mDataList = new ArrayList<>();
+    private List<CFOUserModel> mDataList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -32,7 +32,7 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyHistoryViewHo
         return mDataList.size();
     }
 
-    void setCFOData(List<UserDataResponse> dataList){
+    void setCFOData(List<CFOUserModel> dataList){
         mDataList.clear();
         mDataList.addAll(dataList);
         notifyDataSetChanged();
@@ -40,14 +40,14 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyHistoryViewHo
 
     class MyHistoryViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTvProjectId;
-        private TextView mTvServiceName;
-        private TextView mTvUserName;
-        private TextView mTvCFOName;
-        private TextView mTvDuration;
-        private TextView mTvAmount;
-        private int mPosition;
-        private UserDataResponse mData;
+        private TextView        mTvProjectId;
+        private TextView        mTvServiceName;
+        private TextView        mTvUserName;
+        private TextView        mTvCFOName;
+        private TextView        mTvDuration;
+        private TextView        mTvAmount;
+        private int             mPosition;
+        private CFOUserModel mData;
 
         MyHistoryViewHolder(@NonNull ViewGroup parent) {
             super(LayoutInflater.from(parent.getContext())

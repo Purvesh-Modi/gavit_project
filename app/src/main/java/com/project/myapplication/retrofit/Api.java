@@ -1,7 +1,7 @@
 package com.project.myapplication.retrofit;
 
-import com.project.myapplication.retrofit.request.CreateCFOUserRequest;
-import com.project.myapplication.retrofit.response.UserDataResponse;
+import com.project.myapplication.retrofit.api_models.CFOUserModel;
+import com.project.myapplication.retrofit.api_models.UserModel;
 
 import java.util.List;
 
@@ -13,27 +13,30 @@ import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface Api {
+
+    //CFO User APIs
     @POST("cfo/create")
-    Call<UserDataResponse> registerCFOUser(@Body CreateCFOUserRequest userRequest);
+    Call<CFOUserModel> registerCFOUser(@Body CFOUserModel userRequest);
 
     @GET("cfo/view")
-    Call<UserDataResponse> getCFOUserById(@Query("id") int cfoUserId);
+    Call<CFOUserModel> getCFOUserById(@Query("id") int cfoUserId);
 
     @PUT("cfo/update")
-    Call<UserDataResponse> updateCFOUserById(@Body CreateCFOUserRequest userRequest);
+    Call<CFOUserModel> updateCFOUserById(@Body CFOUserModel userRequest);
 
     @GET("cfo/index")
-    Call<List<UserDataResponse>> getAllCFOUsers();
+    Call<List<CFOUserModel>> getAllCFOUsers();
 
+    //User APIs
     @POST("user/create")
-    Call<UserDataResponse> registerUser(@Body CreateCFOUserRequest userRequest);
+    Call<UserModel> registerUser(@Body UserModel userModel);
 
     @GET("user/view")
-    Call<UserDataResponse> getUserById(@Query("id") int cfoUserId);
+    Call<UserModel> getUserById(@Query("id") int userId);
 
     @PUT("user/update")
-    Call<UserDataResponse> updateUserById(@Body CreateCFOUserRequest userRequest);
+    Call<UserModel> updateUserById(@Body UserModel userModel);
 
     @GET("user/index")
-    Call<List<UserDataResponse>> getAllUsers();
+    Call<List<UserModel>> getAllUsers();
 }

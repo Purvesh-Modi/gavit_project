@@ -13,8 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.project.myapplication.retrofit.RetrofitClient;
-import com.project.myapplication.retrofit.request.CreateCFOUserRequest;
-import com.project.myapplication.retrofit.response.UserDataResponse;
+import com.project.myapplication.retrofit.api_models.CFOUserModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -175,7 +174,7 @@ public class CfoSignUpActivity extends AppCompatActivity implements View.OnClick
 
     private void fireSignUpAPICall() {
 
-        CreateCFOUserRequest request = new CreateCFOUserRequest();
+        CFOUserModel request = new CFOUserModel();
 
         request.setCfoEmail(cfo_email.getText().toString().trim());
         request.setCfoPassword(cfo_cfm_password.getText().toString().trim());
@@ -186,10 +185,10 @@ public class CfoSignUpActivity extends AppCompatActivity implements View.OnClick
         request.setCfoPhone(Long.valueOf(cfo_phn.getText().toString().trim()));
 
         try {
-            Call<UserDataResponse> requestCreateCall = RetrofitClient.getInstance().getApi().registerCFOUser(request);
-            requestCreateCall.enqueue(new Callback<UserDataResponse>() {
+            Call<CFOUserModel> requestCreateCall = RetrofitClient.getInstance().getApi().registerCFOUser(request);
+            requestCreateCall.enqueue(new Callback<CFOUserModel>() {
                 @Override
-                public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
+                public void onResponse(Call<CFOUserModel> call, Response<CFOUserModel> response) {
                     finish();
                     startActivity(new Intent(CfoSignUpActivity.this, MainActivity.class));
                     Toast.makeText(CfoSignUpActivity.this, "User created successfully",
@@ -197,7 +196,7 @@ public class CfoSignUpActivity extends AppCompatActivity implements View.OnClick
                 }
 
                 @Override
-                public void onFailure(Call<UserDataResponse> call, Throwable t) {
+                public void onFailure(Call<CFOUserModel> call, Throwable t) {
                     Toast.makeText(CfoSignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
