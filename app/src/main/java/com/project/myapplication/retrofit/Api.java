@@ -13,16 +13,27 @@ import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface Api {
-
-    @POST("create")
+    @POST("cfo/create")
     Call<UserDataResponse> registerCFOUser(@Body CreateCFOUserRequest userRequest);
 
-    @GET("view")
-    Call<UserDataResponse> getUserById(@Query("id") int cfoUserId);
+    @GET("cfo/view")
+    Call<UserDataResponse> getCFOUserById(@Query("id") int cfoUserId);
 
-    @PUT("update")
+    @PUT("cfo/update")
     Call<UserDataResponse> updateCFOUserById(@Body CreateCFOUserRequest userRequest);
 
-    @GET("index")
+    @GET("cfo/index")
     Call<List<UserDataResponse>> getAllCFOUsers();
+
+    @POST("user/create")
+    Call<UserDataResponse> registerUser(@Body CreateCFOUserRequest userRequest);
+
+    @GET("user/view")
+    Call<UserDataResponse> getUserById(@Query("id") int cfoUserId);
+
+    @PUT("user/update")
+    Call<UserDataResponse> updateUserById(@Body CreateCFOUserRequest userRequest);
+
+    @GET("user/index")
+    Call<List<UserDataResponse>> getAllUsers();
 }

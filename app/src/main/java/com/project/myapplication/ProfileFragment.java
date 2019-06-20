@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +61,7 @@ public class ProfileFragment extends Fragment {
             int currentUserId = PreferenceManager
                     .getDefaultSharedPreferences(getContext()).getInt(Constants.KEY_USER_ID, 0);
             Call<UserDataResponse> viewProfileCall = RetrofitClient.getInstance().getApi()
-                    .getUserById(currentUserId);
+                    .getCFOUserById(currentUserId);
             mProgress.show();
             viewProfileCall.enqueue(new Callback<UserDataResponse>() {
                 @Override

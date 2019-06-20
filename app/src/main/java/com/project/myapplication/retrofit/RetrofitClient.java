@@ -1,11 +1,7 @@
 package com.project.myapplication.retrofit;
 
-import com.project.myapplication.BaseConfigue;
+import com.project.myapplication.BaseConfiguration;
 
-import java.util.logging.Level;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,7 +12,7 @@ public class RetrofitClient {
 
     private RetrofitClient() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(BaseConfigue.BASE_URL)
+                .baseUrl(BaseConfiguration.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 //.client(httpClient.build())
                 .build();
