@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_root_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg">
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/login_imgView_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="80dp"
@@ -36,7 +36,7 @@
         android:textColorHint="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image" />
+        app:layout_constraintTop_toBottomOf="@+id/login_imgView_logo" />
 
     <EditText
         android:id="@+id/password"
