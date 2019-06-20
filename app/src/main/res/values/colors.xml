@@ -10,5 +10,5 @@
     <color name="login_form_detail">#ccffffff</color>
     <color name="login_form_detail_medium">#66ffffff</color>
     <color name="login_form_detail_light">#d3d3d3</color>
-    <color name="black"></color>
+    <color name="black">#000</color>
 </resources>

@@ -15,5 +15,5 @@
     <string name="search">Search</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
-    <string name="cfo_model">Cfo Model</string>
+    <string name="cfo_model">CFO Model</string>
 </resources>
