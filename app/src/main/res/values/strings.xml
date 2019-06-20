@@ -16,4 +16,5 @@
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="cfo_model">CFO Model</string>
+    <string name="welcome_to_cfo_model">Welcome to CFO model</string>
 </resources>
