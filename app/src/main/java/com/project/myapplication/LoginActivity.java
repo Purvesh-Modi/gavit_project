@@ -3,9 +3,7 @@ package com.project.myapplication;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -29,7 +27,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button login, signup;
+    Button btnUserLogin, btnCfoLogin, signup;
     EditText username, mPassword;
     Snackbar       snackbar;
     View           view;
@@ -53,12 +51,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         username = findViewById(R.id.username);
         mPassword = findViewById(R.id.password);
-        login = findViewById(R.id.login);
+        btnUserLogin = findViewById(R.id.loginAsUser);
+        btnCfoLogin = findViewById(R.id.loginAsCfo);
         signup = findViewById(R.id.signup);
 
         mProgressDialog = new ProgressDialog(this);
 
-        login.setOnClickListener(this);
+        btnUserLogin.setOnClickListener(this);
+        btnCfoLogin.setOnClickListener(this);
         signup.setOnClickListener(this);
 
     }
@@ -66,14 +66,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login:
-                mLogin();
+            case R.id.loginAsUser:
+                mUserLogin();
                 break;
 
             case R.id.signup:
                 mSignUp();
                 break;
+
+            case R.id.loginAsCfo:
+                mCfoLogin();
+                break;
         }
+    }
+
+    private void mCfoLogin() {
     }
 
     // Validation for this activity
@@ -121,8 +128,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(new Intent(this, SelectSignUpActivity.class));
     }
 
-    // for login
-    private void mLogin() {
+    // for btnUserLogin
+    private void mUserLogin() {
         if (!validateForm()) {
             return;
         }

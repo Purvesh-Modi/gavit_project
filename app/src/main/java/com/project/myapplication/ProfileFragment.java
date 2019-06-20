@@ -81,8 +81,8 @@ public class ProfileFragment extends Fragment {
                 }
             });
         } catch (Exception ex) {
-            mProgress.cancel();
             Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+            mProgress.cancel();
         }
     }
 
