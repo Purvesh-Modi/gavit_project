@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.project.myapplication.retrofit.RetrofitClient;
-import com.project.myapplication.retrofit.response.UserDataResponse;
+import com.project.myapplication.retrofit.api_models.CFOUserModel;
 
 import java.util.List;
 
@@ -51,11 +51,11 @@ public class HistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            Call<List<UserDataResponse>> userListCall = RetrofitClient.getInstance().getApi().getAllCFOUsers();
+            Call<List<CFOUserModel>> userListCall = RetrofitClient.getInstance().getApi().getAllCFOUsers();
 
-            userListCall.enqueue(new Callback<List<UserDataResponse>>() {
+            userListCall.enqueue(new Callback<List<CFOUserModel>>() {
                 @Override
-                public void onResponse(Call<List<UserDataResponse>> call, Response<List<UserDataResponse>> response) {
+                public void onResponse(Call<List<CFOUserModel>> call, Response<List<CFOUserModel>> response) {
                     if (response.body() != null) {
                         mAdapter.setCFOData(response.body());
                     }else {
@@ -64,7 +64,7 @@ public class HistoryFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<List<UserDataResponse>> call, Throwable t) {
+                public void onFailure(Call<List<CFOUserModel>> call, Throwable t) {
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });

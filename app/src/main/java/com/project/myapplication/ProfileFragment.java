@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.myapplication.retrofit.RetrofitClient;
-import com.project.myapplication.retrofit.response.UserDataResponse;
+import com.project.myapplication.retrofit.api_models.CFOUserModel;
 import com.project.myapplication.utils.Constants;
 
 import retrofit2.Call;
@@ -60,13 +60,13 @@ public class ProfileFragment extends Fragment {
         try {
             int currentUserId = PreferenceManager
                     .getDefaultSharedPreferences(getContext()).getInt(Constants.KEY_USER_ID, 0);
-            Call<UserDataResponse> viewProfileCall = RetrofitClient.getInstance().getApi()
+            Call<CFOUserModel> viewProfileCall = RetrofitClient.getInstance().getApi()
                     .getCFOUserById(currentUserId);
             mProgress.show();
-            viewProfileCall.enqueue(new Callback<UserDataResponse>() {
+            viewProfileCall.enqueue(new Callback<CFOUserModel>() {
                 @Override
-                public void onResponse(Call<UserDataResponse> call,
-                                       Response<UserDataResponse> response) {
+                public void onResponse(Call<CFOUserModel> call,
+                                       Response<CFOUserModel> response) {
                     mProgress.cancel();
                     if (response.body() != null) {
                         bindUI(response.body());
@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<UserDataResponse> call, Throwable t) {
+                public void onFailure(Call<CFOUserModel> call, Throwable t) {
                     mProgress.cancel();
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void bindUI(UserDataResponse userData) {
+    private void bindUI(CFOUserModel userData) {
         mTvUserId.setText(String.valueOf(userData.getCfoId()));
         mTvFirstName.setText(userData.getCfoFname());
         mTvLastName.setText(userData.getCfoLname());

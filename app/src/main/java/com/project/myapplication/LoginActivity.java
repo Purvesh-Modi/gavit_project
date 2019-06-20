@@ -16,7 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.project.myapplication.retrofit.RetrofitClient;
-import com.project.myapplication.retrofit.response.UserDataResponse;
+import com.project.myapplication.retrofit.api_models.CFOUserModel;
+import com.project.myapplication.retrofit.api_models.UserModel;
 import com.project.myapplication.utils.Constants;
 
 import java.util.List;
@@ -44,9 +45,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
                         .getInt(Constants.KEY_USER_ID, 0);
 
-        if (getCfoID != 0){
+        if (getCfoID != 0) {
             finish();
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
         }
 
         username = findViewById(R.id.username);
@@ -81,6 +82,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void mCfoLogin() {
+        if (!validateForm()) {
+            return;
+        }
+
+        final String email    = username.getText().toString().trim();
+        final String password = mPassword.getText().toString().trim();
+
+        try {
+            Call<List<CFOUserModel>> userListCall = RetrofitClient.getInstance().getApi()
+                    .getAllCFOUsers();
+
+            userListCall.enqueue(new Callback<List<CFOUserModel>>() {
+                @Override
+                public void onResponse(Call<List<CFOUserModel>> call,
+                                       Response<List<CFOUserModel>> response) {
+                    if (response.body() != null) {
+                        if (checkCFOUserLogin(email, password, response.body())) {
+                            PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
+                                    .edit().putInt(Constants.KEY_USER_ID, mCurrentUserId).commit();
+                            Constants.IS_LOGGEDIN = true;
+                            BaseConfiguration.isCurrentUserIsCFO = true;
+                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        } else {
+                            Toast.makeText(LoginActivity.this,
+                                    "Email ID or password does not match", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "No Data Found", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<CFOUserModel>> call, Throwable t) {
+                    Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Validation for this activity
@@ -138,18 +182,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final String password = mPassword.getText().toString().trim();
 
         try {
-            Call<List<UserDataResponse>> userListCall = RetrofitClient.getInstance().getApi()
-                    .getAllCFOUsers();
+            Call<List<UserModel>> userListCall = RetrofitClient.getInstance().getApi()
+                    .getAllUsers();
 
-            userListCall.enqueue(new Callback<List<UserDataResponse>>() {
+            userListCall.enqueue(new Callback<List<UserModel>>() {
                 @Override
-                public void onResponse(Call<List<UserDataResponse>> call,
-                                       Response<List<UserDataResponse>> response) {
+                public void onResponse(Call<List<UserModel>> call,
+                                       Response<List<UserModel>> response) {
                     if (response.body() != null) {
                         if (checkUserLogin(email, password, response.body())) {
                             PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
                                     .edit().putInt(Constants.KEY_USER_ID, mCurrentUserId).commit();
                             Constants.IS_LOGGEDIN = true;
+                            BaseConfiguration.isCurrentUserIsCFO = false;
+                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
@@ -164,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 @Override
-                public void onFailure(Call<List<UserDataResponse>> call, Throwable t) {
+                public void onFailure(Call<List<UserModel>> call, Throwable t) {
                     Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -173,11 +219,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private boolean checkUserLogin(String email, String password,
-                                   List<UserDataResponse> availableUsers) {
-        for (UserDataResponse user : availableUsers) {
+    private boolean checkCFOUserLogin(String email, String password,
+                                      List<CFOUserModel> availableUsers) {
+        for (CFOUserModel user : availableUsers) {
             if (user.getCfoEmail().equals(email) && user.getCfoPassword().equals(password)) {
                 mCurrentUserId = user.getCfoId();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkUserLogin(String email, String password,
+                                   List<UserModel> availableUsers) {
+        for (UserModel user : availableUsers) {
+            if (user.getUserEmail().equals(email) && user.getUserPassword().equals(password)) {
+                mCurrentUserId = user.getUserId();
                 return true;
             }
         }

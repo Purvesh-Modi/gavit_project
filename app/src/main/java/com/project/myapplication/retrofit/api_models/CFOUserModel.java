@@ -1,9 +1,9 @@
-package com.project.myapplication.retrofit.response;
+package com.project.myapplication.retrofit.api_models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserDataResponse {
+public class CFOUserModel {
 
     @SerializedName("cfo_id")
     @Expose
