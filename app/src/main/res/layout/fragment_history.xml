@@ -9,6 +9,6 @@
     android:orientation="vertical"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
     tools:itemCount="4"
-    tools:listitem="@layout/item_history_fragment">
+    tools:listitem="@layout/item_cfo_user">
 
 </android.support.v7.widget.RecyclerView>

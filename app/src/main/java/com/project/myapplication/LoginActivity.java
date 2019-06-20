@@ -28,12 +28,11 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnUserLogin, btnCfoLogin, signup;
-    EditText username, mPassword;
-    Snackbar       snackbar;
-    View           view;
-    ProgressDialog mProgressDialog;
-    private int mCurrentUserId;
+    private Button btnUserLogin, btnCfoLogin, signup;
+    private EditText username, mPassword;
+    private Snackbar       snackbar;
+    private View           view;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +97,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onResponse(Call<List<CFOUserModel>> call,
                                        Response<List<CFOUserModel>> response) {
                     if (response.body() != null) {
-                        if (checkCFOUserLogin(email, password, response.body())) {
+                        CFOUserModel currentUser = new CFOUserModel();
+                        if (checkCFOUserLogin(email, password, response.body(), currentUser)) {
                             PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
-                                    .edit().putInt(Constants.KEY_USER_ID, mCurrentUserId).commit();
-                            Constants.IS_LOGGEDIN = true;
+                                    .edit().putInt(Constants.KEY_USER_ID, currentUser.getCfoId()).commit();
+                            PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
+                                    .edit().putString(Constants.KEY_USER_NAME, currentUser.getCfoFname() + " " + currentUser.getCfoLname()).commit();
+                            PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
+                                    .edit().putString(Constants.KEY_USER_EMAIL, currentUser.getCfoEmail()).commit();
+                            Constants.IS_LOGGED_IN = true;
                             BaseConfiguration.isCurrentUserIsCFO = true;
                             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                             finish();
@@ -190,10 +194,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onResponse(Call<List<UserModel>> call,
                                        Response<List<UserModel>> response) {
                     if (response.body() != null) {
-                        if (checkUserLogin(email, password, response.body())) {
+                        UserModel currentUser = new UserModel();
+                        if (checkUserLogin(email, password, response.body(), currentUser)) {
                             PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
-                                    .edit().putInt(Constants.KEY_USER_ID, mCurrentUserId).commit();
-                            Constants.IS_LOGGEDIN = true;
+                                    .edit().putInt(Constants.KEY_USER_ID, currentUser.getUserId()).commit();
+                            PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
+                                    .edit().putString(Constants.KEY_USER_NAME, currentUser.getUserFname() + " " + currentUser.getUserLname()).commit();
+                            PreferenceManager.getDefaultSharedPreferences(LoginActivity.this)
+                                    .edit().putString(Constants.KEY_USER_EMAIL, currentUser.getUserEmail()).commit();
+                            Constants.IS_LOGGED_IN = true;
                             BaseConfiguration.isCurrentUserIsCFO = false;
                             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                             finish();
@@ -220,10 +229,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean checkCFOUserLogin(String email, String password,
-                                      List<CFOUserModel> availableUsers) {
+                                      List<CFOUserModel> availableUsers,
+                                      CFOUserModel currentUserOut) {
         for (CFOUserModel user : availableUsers) {
             if (user.getCfoEmail().equals(email) && user.getCfoPassword().equals(password)) {
-                mCurrentUserId = user.getCfoId();
+                currentUserOut.setCfoFname(user.getCfoFname());
+                currentUserOut.setCfoLname(user.getCfoLname());
+                currentUserOut.setCfoId(user.getCfoId());
+                currentUserOut.setCfoEmail(user.getCfoEmail());
                 return true;
             }
         }
@@ -231,10 +244,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean checkUserLogin(String email, String password,
-                                   List<UserModel> availableUsers) {
+                                   List<UserModel> availableUsers, UserModel currentUserOut) {
         for (UserModel user : availableUsers) {
             if (user.getUserEmail().equals(email) && user.getUserPassword().equals(password)) {
-                mCurrentUserId = user.getUserId();
+                currentUserOut.setUserFname(user.getUserFname());
+                currentUserOut.setUserLname(user.getUserLname());
+                currentUserOut.setUserId(user.getUserId());
+                currentUserOut.setUserEmail(user.getUserEmail());
                 return true;
             }
         }

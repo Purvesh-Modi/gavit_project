@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.project.myapplication.retrofit.RetrofitClient;
 import com.project.myapplication.retrofit.api_models.CFOUserModel;
+import com.project.myapplication.retrofit.api_models.UserModel;
 import com.project.myapplication.utils.Constants;
 
 import retrofit2.Call;
@@ -57,32 +58,68 @@ public class ProfileFragment extends Fragment {
     }
 
     private void fireViewAPICall() {
-        try {
-            int currentUserId = PreferenceManager
-                    .getDefaultSharedPreferences(getContext()).getInt(Constants.KEY_USER_ID, 0);
-            Call<CFOUserModel> viewProfileCall = RetrofitClient.getInstance().getApi()
-                    .getCFOUserById(currentUserId);
-            mProgress.show();
-            viewProfileCall.enqueue(new Callback<CFOUserModel>() {
-                @Override
-                public void onResponse(Call<CFOUserModel> call,
-                                       Response<CFOUserModel> response) {
-                    mProgress.cancel();
-                    if (response.body() != null) {
-                        bindUI(response.body());
+        int currentUserId = PreferenceManager
+                .getDefaultSharedPreferences(getContext()).getInt(Constants.KEY_USER_ID, 0);
+        if (BaseConfiguration.isCurrentUserIsCFO) {
+            try {
+                Call<CFOUserModel> viewProfileCall = RetrofitClient.getInstance().getApi()
+                        .getCFOUserById(currentUserId);
+                mProgress.show();
+                viewProfileCall.enqueue(new Callback<CFOUserModel>() {
+                    @Override
+                    public void onResponse(Call<CFOUserModel> call,
+                                           Response<CFOUserModel> response) {
+                        mProgress.cancel();
+                        if (response.body() != null) {
+                            bindUI(response.body());
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<CFOUserModel> call, Throwable t) {
-                    mProgress.cancel();
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception ex) {
-            Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-            mProgress.cancel();
+                    @Override
+                    public void onFailure(Call<CFOUserModel> call, Throwable t) {
+                        mProgress.cancel();
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception ex) {
+                Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgress.cancel();
+            }
+        } else {
+            try {
+                Call<UserModel> viewProfileCall = RetrofitClient.getInstance().getApi()
+                        .getUserById(currentUserId);
+                mProgress.show();
+                viewProfileCall.enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call,
+                                           Response<UserModel> response) {
+                        mProgress.cancel();
+                        if (response.body() != null) {
+                            bindUI(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        mProgress.cancel();
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception ex) {
+                Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgress.cancel();
+            }
         }
+    }
+
+    private void bindUI(UserModel userData) {
+        mTvUserId.setText(String.valueOf(userData.getUserId()));
+        mTvFirstName.setText(userData.getUserFname());
+        mTvLastName.setText(userData.getUserLname());
+        mTvYearsOfExp.setText("NOT APPLICABLE");
+        mTvEmail.setText(userData.getUserEmail());
+        mTvPhone.setText(String.valueOf(userData.getUserPhone()));
     }
 
     private void bindUI(CFOUserModel userData) {
