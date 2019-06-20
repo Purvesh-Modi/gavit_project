@@ -12,7 +12,7 @@ import com.project.myapplication.retrofit.api_models.CFOUserModel;
 import java.util.ArrayList;
 import java.util.List;
 
-class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyHistoryViewHolder> {
+class HistoryCFOUserAdapter extends RecyclerView.Adapter<HistoryCFOUserAdapter.MyHistoryViewHolder> {
 
     private List<CFOUserModel> mDataList = new ArrayList<>();
 
@@ -32,7 +32,7 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyHistoryViewHo
         return mDataList.size();
     }
 
-    void setCFOData(List<CFOUserModel> dataList){
+    void setCFOData(List<CFOUserModel> dataList) {
         mDataList.clear();
         mDataList.addAll(dataList);
         notifyDataSetChanged();
@@ -40,18 +40,18 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyHistoryViewHo
 
     class MyHistoryViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView        mTvProjectId;
-        private TextView        mTvServiceName;
-        private TextView        mTvUserName;
-        private TextView        mTvCFOName;
-        private TextView        mTvDuration;
-        private TextView        mTvAmount;
-        private int             mPosition;
+        private TextView     mTvProjectId;
+        private TextView     mTvServiceName;
+        private TextView     mTvUserName;
+        private TextView     mTvCFOName;
+        private TextView     mTvDuration;
+        private TextView     mTvAmount;
+        private int          mPosition;
         private CFOUserModel mData;
 
         MyHistoryViewHolder(@NonNull ViewGroup parent) {
             super(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_history_fragment, parent, false));
+                    .inflate(R.layout.item_cfo_user, parent, false));
             initView(itemView);
         }
 
@@ -64,15 +64,15 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyHistoryViewHo
             mTvAmount = convertView.findViewById(R.id.tv_amount);
         }
 
-        private void bindData(int position){
+        private void bindData(int position) {
             mPosition = position;
             mData = mDataList.get(mPosition);
 
             mTvProjectId.setText(String.valueOf(mPosition + 1));
             mTvServiceName.setText(String.valueOf(mData.getCfoId()));
-            mTvUserName.setText("dumi");
+            mTvUserName.setText("dummy");
             mTvCFOName.setText(mData.getCfoFname() + " " + mData.getCfoLname());
-            mTvDuration.setText("3");
+            mTvDuration.setText(mData.getCfoYears_of_exp());
             mTvAmount.setText("$ 50000");
         }
     }

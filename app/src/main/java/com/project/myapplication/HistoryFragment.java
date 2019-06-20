@@ -22,10 +22,10 @@ import retrofit2.Response;
 
 public class HistoryFragment extends Fragment {
 
-    public static final String         TAG = "HistoryFragment";
-    private             View           view;
-    private             HistoryAdapter mAdapter;
-    private             RecyclerView   mRvDataList;
+    public static final String                TAG = "HistoryFragment";
+    private             View                  view;
+    private             HistoryCFOUserAdapter mAdapter;
+    private             RecyclerView          mRvDataList;
 
     public HistoryFragment() {
 
@@ -39,7 +39,7 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_history, container, false);
-        mAdapter = new HistoryAdapter();
+        mAdapter = new HistoryCFOUserAdapter();
         mRvDataList = view.findViewById(R.id.rv_data_list);
         mRvDataList.setAdapter(mAdapter);
 
@@ -50,6 +50,10 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getAllCFOUsers();
+    }
+
+    private void getAllCFOUsers() {
         try {
             Call<List<CFOUserModel>> userListCall = RetrofitClient.getInstance().getApi().getAllCFOUsers();
 
@@ -58,7 +62,7 @@ public class HistoryFragment extends Fragment {
                 public void onResponse(Call<List<CFOUserModel>> call, Response<List<CFOUserModel>> response) {
                     if (response.body() != null) {
                         mAdapter.setCFOData(response.body());
-                    }else {
+                    } else {
                         Toast.makeText(getContext(), "No Data Found", Toast.LENGTH_SHORT).show();
                     }
                 }

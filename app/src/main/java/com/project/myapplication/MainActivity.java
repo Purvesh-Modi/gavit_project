@@ -20,17 +20,16 @@ import android.widget.Toast;
 
 import com.project.myapplication.utils.Constants;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Toolbar              toolbar;
-    NavigationView       navigationView;
-    DrawerLayout         drawer;
-    BottomNavigationView navView;
-    int                  getCfoID;
-
+    int getCfoID;
+    private Toolbar                                               toolbar;
+    private NavigationView                                        navigationView;
+    private DrawerLayout                                          drawer;
+    private BottomNavigationView                                  navView;
+    private TextView                                              mTvLoginUserName;
+    private TextView                                              mTvLoginUserEmail;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -86,6 +85,14 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        mTvLoginUserName = navigationView.getHeaderView(0)
+                .findViewById(R.id.tv_login_user_name);
+
+        mTvLoginUserEmail = navigationView.getHeaderView(0)
+                .findViewById(R.id.tv_login_user_email);
+
+        mTvLoginUserName.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_USER_NAME, ""));
+        mTvLoginUserEmail.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.KEY_USER_EMAIL, ""));
 
         getSupportFragmentManager()
                 .beginTransaction()
