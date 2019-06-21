@@ -26,8 +26,7 @@ public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
     View view;
     private TextView mTvUserId;
-    private TextView mTvFirstName;
-    private TextView mTvLastName;
+    private TextView mTvName;
     private TextView mTvYearsOfExp;
     private TextView mTvEmail;
     private TextView mTvPhone;
@@ -115,8 +114,7 @@ public class ProfileFragment extends Fragment {
 
     private void bindUI(UserModel userData) {
         mTvUserId.setText(String.valueOf(userData.getUserId()));
-        mTvFirstName.setText(userData.getUserFname());
-        mTvLastName.setText(userData.getUserLname());
+        mTvName.setText(String.format("%s %s", userData.getUserFname(), userData.getUserLname()));
         mTvYearsOfExp.setText("NOT APPLICABLE");
         mTvEmail.setText(userData.getUserEmail());
         mTvPhone.setText(String.valueOf(userData.getUserPhone()));
@@ -124,8 +122,7 @@ public class ProfileFragment extends Fragment {
 
     private void bindUI(CFOUserModel userData) {
         mTvUserId.setText(String.valueOf(userData.getCfoId()));
-        mTvFirstName.setText(userData.getCfoFname());
-        mTvLastName.setText(userData.getCfoLname());
+        mTvName.setText(String.format("%s %s", userData.getCfoFname(), userData.getCfoLname()));
         mTvYearsOfExp.setText(userData.getCfoYears_of_exp());
         mTvEmail.setText(userData.getCfoEmail());
         mTvPhone.setText(String.valueOf(userData.getCfoPhone()));
@@ -133,8 +130,7 @@ public class ProfileFragment extends Fragment {
 
     private void initView(View view) {
         mTvUserId = view.findViewById(R.id.tv_user_id);
-        mTvFirstName = view.findViewById(R.id.tv_first_name);
-        mTvLastName = view.findViewById(R.id.tv_last_name);
+        mTvName = view.findViewById(R.id.tv_name);
         mTvYearsOfExp = view.findViewById(R.id.tv_years_of_exp);
         mTvEmail = view.findViewById(R.id.tv_email);
         mTvPhone = view.findViewById(R.id.tv_phone);
