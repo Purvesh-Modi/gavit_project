@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +26,12 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
     View view;
-    private TextView mTvUserId;
-    private TextView mTvName;
-    private TextView mTvYearsOfExp;
-    private TextView mTvEmail;
-    private TextView mTvPhone;
+    private TextInputEditText mTvUserId;
+    private TextInputEditText mTvName;
+    private TextInputEditText mTvYearsOfExp;
+    private TextInputEditText mTvQualification;
+    private TextInputEditText mTvEmail;
+    private TextInputEditText mTvPhone;
 
     private ProgressDialog mProgress;
 
@@ -115,7 +117,8 @@ public class ProfileFragment extends Fragment {
     private void bindUI(UserModel userData) {
         mTvUserId.setText(String.valueOf(userData.getUserId()));
         mTvName.setText(String.format("%s %s", userData.getUserFname(), userData.getUserLname()));
-        mTvYearsOfExp.setText("NOT APPLICABLE");
+        mTvYearsOfExp.setText("Not Applicable");
+        mTvQualification.setText("Not Applicable");
         mTvEmail.setText(userData.getUserEmail());
         mTvPhone.setText(String.valueOf(userData.getUserPhone()));
     }
@@ -124,6 +127,7 @@ public class ProfileFragment extends Fragment {
         mTvUserId.setText(String.valueOf(userData.getCfoId()));
         mTvName.setText(String.format("%s %s", userData.getCfoFname(), userData.getCfoLname()));
         mTvYearsOfExp.setText(userData.getCfoYears_of_exp());
+        mTvQualification.setText(userData.getCfoQualification());
         mTvEmail.setText(userData.getCfoEmail());
         mTvPhone.setText(String.valueOf(userData.getCfoPhone()));
     }
@@ -132,6 +136,7 @@ public class ProfileFragment extends Fragment {
         mTvUserId = view.findViewById(R.id.tv_user_id);
         mTvName = view.findViewById(R.id.tv_name);
         mTvYearsOfExp = view.findViewById(R.id.tv_years_of_exp);
+        mTvQualification = view.findViewById(R.id.tv_qualification);
         mTvEmail = view.findViewById(R.id.tv_email);
         mTvPhone = view.findViewById(R.id.tv_phone);
     }
