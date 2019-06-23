@@ -1,12 +1,15 @@
 package com.project.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.*;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.project.myapplication.retrofit.RetrofitClient;
 import com.project.myapplication.retrofit.api_models.CFOUserModel;
@@ -69,9 +72,11 @@ public class SearchFragment
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.search_menu, menu);
-    MenuItem   search     = menu.findItem(R.id.action_search);
-    SearchView searchView = (SearchView) search.getActionView();
-    
+    MenuItem   search         = menu.findItem(R.id.action_search);
+    SearchView searchView     = (SearchView) search.getActionView();
+    EditText searchEditText =
+      searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+    searchEditText.setTextColor(Color.WHITE);
     searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
     searchView.setOnQueryTextListener(this);
     super.onCreateOptionsMenu(menu, inflater);
