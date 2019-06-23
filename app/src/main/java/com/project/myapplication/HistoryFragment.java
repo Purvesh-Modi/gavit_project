@@ -22,10 +22,10 @@ import retrofit2.Response;
 
 public class HistoryFragment extends Fragment {
 
-    public static final String                TAG = "HistoryFragment";
-    private             View                  view;
-    private             HistoryCFOUserAdapter mAdapter;
-    private             RecyclerView          mRvDataList;
+    public static final String         TAG = "HistoryFragment";
+    private             View           view;
+    private             CFOUserAdapter mAdapter;
+    private             RecyclerView   mRvDataList;
 
     public HistoryFragment() {
 
@@ -39,11 +39,11 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_history, container, false);
-        mAdapter = new HistoryCFOUserAdapter();
+        mAdapter = new CFOUserAdapter();
         mRvDataList = view.findViewById(R.id.rv_data_list);
         mRvDataList.setAdapter(mAdapter);
 
-        mRvDataList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        //mRvDataList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
 

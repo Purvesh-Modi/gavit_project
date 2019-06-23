@@ -5,17 +5,48 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.*;
 
 import com.project.myapplication.retrofit.api_models.CFOUserModel;
 import com.project.myapplication.retrofit.api_models.UserModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.UserViewHolder> {
+class UserAdapter
+  extends RecyclerView.Adapter<UserAdapter.UserViewHolder> implements Filterable {
 
     private List<UserModel> mDataList = new ArrayList<>();
+    private List<UserModel> mGlobalDataList;
+    private Filter mUserFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String        searchString  = constraint.toString().toLowerCase().trim();
+            FilterResults filterResults = new FilterResults();
+            if (searchString.isEmpty()) {
+                filterResults.values = mGlobalDataList;
+            } else {
+                List<UserModel> filterData = new ArrayList<>();
+                for (UserModel userModel : mGlobalDataList) {
+                    if (String.format("%s %s", userModel.getUserFname(), userModel.getUserLname())
+                              .toLowerCase()
+                              .trim()
+                              .contains(searchString)||
+                        userModel.getUserPhone().toString().contains(searchString)) {
+                        filterData.add(userModel);
+                    }
+                }
+                filterResults.values = filterData;
+            }
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mDataList.clear();
+            mDataList.addAll((Collection<? extends UserModel>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     @NonNull
     @Override
@@ -37,6 +68,12 @@ class ListUserAdapter extends RecyclerView.Adapter<ListUserAdapter.UserViewHolde
         mDataList.clear();
         mDataList.addAll(dataList);
         notifyDataSetChanged();
+        mGlobalDataList = new ArrayList<>(dataList);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mUserFilter;
     }
 
     class UserViewHolder extends RecyclerView.ViewHolder {

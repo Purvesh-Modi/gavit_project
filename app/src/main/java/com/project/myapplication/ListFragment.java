@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.project.myapplication.retrofit.RetrofitClient;
-import com.project.myapplication.retrofit.api_models.CFOUserModel;
 import com.project.myapplication.retrofit.api_models.UserModel;
 
 import java.util.List;
@@ -25,8 +24,8 @@ public class ListFragment extends Fragment {
 
     public static final String TAG = "ListFragment";
     View view;
-    private ListUserAdapter mAdapter;
-    private RecyclerView    mRvUserList;
+    private UserAdapter  mAdapter;
+    private RecyclerView mRvUserList;
 
     public ListFragment() {
 
@@ -40,7 +39,7 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_list, container, false);
-        mAdapter = new ListUserAdapter();
+        mAdapter = new UserAdapter();
         mRvUserList = view.findViewById(R.id.rv_users);
         mRvUserList.setAdapter(mAdapter);
 
